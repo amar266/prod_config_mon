@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Set a variable for time to check against the change,default is half an hour , so the last half an hour changes will be monitored
+chtm=1800
 #Get all changed file names
 files=`etckeeper vcs status --porcelain | grep -E "^\sM|^\sD|^AD|^\?\?" | awk '{print $1","$2}'`
 if [ -z "$files" ]
@@ -16,7 +18,7 @@ else
         timest=`date +"%s"`
         lastm=`stat -c %Y  /etc/$filen`
         dif=`expr $timest - $lastm`
-        if [ $dif -lt 1800000 ]
+        if [ $dif -lt $chtm ]
         then
           #The file has been changed half an hour ago 
           #get the changed data and prepare variable to send alert

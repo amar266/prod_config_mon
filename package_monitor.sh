@@ -1,6 +1,7 @@
 #!/bin/bash
 #Set a variable for time to check against the change,default is half an hour , so the last half an hour changes will be monitored
-chtm=1800
+chtm=18000000
+idc=0
 #get current date
 dt=`date +%Y-%m-%d`
 #Get the data for current date 
@@ -17,8 +18,18 @@ do
   dif=`expr $ctimest - $timest`
   if [ $dif -lt $chtm ]
   then
+     #set an indicater
+     idc=1
      #send alert
      echo "$act action has been done for Package $pkg on $dt $tm "
+     
   fi
   #convert date and time to time stamp
 done
+
+if [ "$idc" = 0 ]
+then
+  exit 0
+else
+  exit 1
+fi

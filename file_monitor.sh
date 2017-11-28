@@ -7,6 +7,7 @@ files=`etckeeper vcs status --porcelain | grep -E "^\sM|^\sD|^AD|^\?\?" | awk '{
 if [ -z "$files" ]
 then
   echo "There is no change in config files"
+  exit 0
 else
   for i in $files
     do
@@ -37,4 +38,5 @@ else
         echo "The file /etc/$filen is untracted \n"
       fi
   done
+exit 1
 fi

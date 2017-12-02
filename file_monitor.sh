@@ -3,7 +3,7 @@
 #Set a variable for time to check against the change,default is half an hour , so the last half an hour changes will be monitored
 chtm=1800
 #Get all changed file names
-files=`etckeeper vcs status --porcelain | grep -E "^\sM|^\sD|^AD|^\?\?" | awk '{print $1","$2}'`
+files=`etckeeper vcs status --porcelain | grep -E "^\sM|^\sD|^\?\?" | awk '{print $1","$2}'`
 if [ -z "$files" ]
 then
   echo "There is no change in config files"
@@ -30,12 +30,9 @@ else
       elif [ "$action" = "D" ]
       then
         echo "The file /etc/$filen has been Deleted \n"
-      elif [ "$action" = "AD" ]
-      then
-        echo "The file /etc/$filen has been Added \n"
       elif [ "$action" = "??" ]
       then
-        echo "The file /etc/$filen is untracted \n"
+        echo "The file /etc/$filen has been created in /etc \n"
       fi
   done
 exit 1
